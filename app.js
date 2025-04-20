@@ -5,6 +5,7 @@ const session = require('express-session');
 const atlasRouter = require('./lib/atlas-router');
 const connectionRouter = require("./lib/connection-router")
 const { createWebSocketProxy } = require('./lib/ws-proxy');
+const auth = require('./lib/auth');
 
 // Parse port from command line
 const args = process.argv;
@@ -38,6 +39,7 @@ if (fs.existsSync(path.join(__dirname, 'dist', 'index.html'))) {
     process.exit(1);
 }
 
+app.use(auth.auth);
 
 app.use(express.static(distPath));
 
